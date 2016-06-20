@@ -6,7 +6,7 @@ Description
 
 Bank page retriever function ``get_banks`` for ``http://index.minfin.com.ua/bank/?mfo`` that does the following:
 
-	* Connects to that URL and retrieves its data
+	* Connects to the URL above and retrieves its data
 	* Processes the page contents and returns the ``Bank Identifier Codes``
 
 
