@@ -25,7 +25,7 @@ Dependencies
 Installing and activating Virtualenv
 ====================================
 
-        pip install virtualenv
+                pip install virtualenv
 		virtualenv venv-bak
 		source venv-bank/bin/activate
 
