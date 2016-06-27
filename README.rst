@@ -6,7 +6,7 @@ Description
 
 Bank page retriever function ``get_banks`` for ``http://index.minfin.com.ua/bank/?mfo`` that does the following:
 
-	* Connects to the URL above and retrieves its data
+	* Connects to that URL and retrieves its data
 	* Processes the page contents and returns the ``Bank Identifier Codes``
 
 
@@ -25,10 +25,10 @@ Dependencies
 Installing and activating Virtualenv
 ====================================
 
-                pip install virtualenv
+        pip install virtualenv
 		virtualenv venv-bak
 		source venv-bank/bin/activate
-
+ 
 
 
 Making the soup
@@ -43,36 +43,27 @@ Making the soup
 
 3. Create the ``get_banks`` function:
 
-		def get_banks(index):
-			r = urllib.urlopen('http://index.minfin.com.ua/bank/?mfo').read()
-			soup = BeautifulSoup(r, 'html.parser')
-			soup.select("table .bank")
-			soup.select(".zebra tr")    # zebra reprezents the name of the class
-			x=soup.select(".zebra tr")
-
-			y=x[i]
-
-			bankIDCode=y.select("td")[0].text
-			dict={}
-			dict['']=bankIDCode
-
-			return dict
+		
+		page = urllib.urlopen('http://index.minfin.com.ua/bank/?mfo').read()
+		soup = BeautifulSoup(page, 'html.parser')
+		tables = soup.select("table ")
+		Result = {}
+		for table in tables:
+			rows = table.select("tr")
+			for row in rows:
+				entries = row.select("td")
+				if entries:
+					Result[entries[0].text]=' BANK: '+entries[1].text + ' CITY: '+entries[2].text
+	
+		return Result
 
 4. Create the ``main`` function wich contains 3 loops for proccesing and retrieving the data for each table :	
 
 		if __name__=="__main__":
-
-			print "Existing banks"
-			for i in range(1, 115):	
-				print get_banks(i)
-
-			print "Liquidated banks"				
-			for i in range(116, 184):
-				print get_banks(i)	
-
-			print "Private banks"	
-			for i in range(185, 232):
-				print get_banks(i)		
+			a = get_banks()
+			type(a)
+			for key in a:
+				print key, a[key]	
 
 References
 ----------
