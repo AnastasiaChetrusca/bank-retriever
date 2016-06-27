@@ -1,34 +1,26 @@
 from bs4 import BeautifulSoup
 import urllib
 
+def get_banks():
 
-def get_banks(index):
-	r = urllib.urlopen('http://index.minfin.com.ua/bank/?mfo').read()
-	soup = BeautifulSoup(r, 'html.parser')
-	soup.select("table .bank")
-	soup.select(".zebra tr")
-	x=soup.select(".zebra tr")
-
-	y=x[i]
+	page = urllib.urlopen('http://index.minfin.com.ua/bank/?mfo').read()
+	soup = BeautifulSoup(page, 'html.parser')
+	tables = soup.select("table ")
+	Result = {}
+	for table in tables:
+		rows = table.select("tr")
+		for row in rows:
+			entries = row.select("td")
+			if entries:
+				Result[entries[0].text]=' BANK: '+entries[1].text + ' CITY: '+entries[2].text
 	
-	bankIDCode=y.select("td")[0].text
-	dict={}
-	dict['ID']=bankIDCode
+	return Result
 
-	return dict
 
 
 if __name__=="__main__":
-
-	print "Existing banks"
-	for i in range(1, 115):	
-		print get_banks(i)
-
-	print "Liquidated banks"				
-	for i in range(116, 184):
-		print get_banks(i)	
-
-	print "Private banks"	
-	for i in range(185, 232):
-		print get_banks(i)	
+	a = get_banks()
+	type(a)
+	for key in a:
+		print key, a[key]
 
