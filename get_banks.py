@@ -6,18 +6,18 @@ def get_banks():
 	page = urllib.urlopen('http://index.minfin.com.ua/bank/?mfo').read()
 	soup = BeautifulSoup(page, 'html.parser')
 	tables = soup.select("table ")
-	Result = {}
+	result = {}
 	for table in tables:
 		rows = table.select("tr")
 		for row in rows:
 			entries = row.select("td")
 			if entries:
-				Result[entries[0].text]=' BANK: '+entries[1].text + ' CITY: '+entries[2].text
+				result[entries[0].text] = ' BANK and City: '+ entries[1].text  #=' BANK: '+entries[1].text + ' CITY: '+entries[2].text
 	
-	return Result
+	return result
 
 
-
+ 
 if __name__=="__main__":
 	a = get_banks()
 	type(a)
