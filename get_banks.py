@@ -12,7 +12,7 @@ def get_banks(index):
 
 	for row in rows:
 		entries = row.select("td")
-		
+
 		if entries:
 
 			key = entries[0].text
@@ -37,7 +37,6 @@ if __name__=="__main__":
 			print "\n\n\nPrivate banks :"		
 
 		a = get_banks(i)
-		type(a)
 		for key, value in a.items():
 			print key ,value[0], value[1]
 
