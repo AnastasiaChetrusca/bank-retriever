@@ -44,26 +44,42 @@ Making the soup
 3. Create the ``get_banks`` function:
 
 		
+		
 		page = urllib.urlopen('http://index.minfin.com.ua/bank/?mfo').read()
 		soup = BeautifulSoup(page, 'html.parser')
-		tables = soup.select("table ")
-		Result = {}
-		for table in tables:
-			rows = table.select("tr")
-			for row in rows:
-				entries = row.select("td")
-				if entries:
-					Result[entries[0].text]=' BANK: '+entries[1].text + ' CITY: '+entries[2].text
+
+		tables = soup.select("table")[index]
+		result = {}
+		rows = tables.select("tr")
+
+		for row in rows:
+			entries = row.select("td")
+
+			if entries:
+
+				key = entries[0].text
+				bank = entries[1].text
+				city = entries[2].text
+
+				result[key]=(bank, city)
 	
-		return Result
+		return result
 
 4. Create the ``main`` function wich contains 3 loops for proccesing and retrieving the data for each table :	
 
 		if __name__=="__main__":
-			a = get_banks()
-			type(a)
-			for key in a:
-				print key, a[key]	
+			for i in range (0,3):
+
+				if i == 0:
+					print "\n\n\nExisting banks :"
+				if i == 1:
+					print "\n\n\nLiquidated banks :"
+				if i == 2:
+					print "\n\n\nPrivate banks :"		
+
+				a = get_banks(i)
+				for key, value in a.items():
+					print key ,value[0], value[1]
 
 References
 ----------

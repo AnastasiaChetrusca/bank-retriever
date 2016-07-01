@@ -19,7 +19,7 @@ def get_banks(index):
 			bank = entries[1].text
 			city = entries[2].text
 
-			result[key]=('BANK: '+bank, 'CITY: '+city )
+			result[key]=(bank, city)
 	
 	return result
 
